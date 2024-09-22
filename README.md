@@ -9,17 +9,6 @@
 - **Interactive Fun**: Turn any webpage into your playground by driving the car around. Toggle driving mode on and off with a simple click.
 - **Non-intrusive**: The car moves smoothly without interfering with webpage elements like scrolling or video playback.
 
-## How to Install
-
-1. Download or clone the repository:
-   ```bash
-   git clone https://github.com/yourusername/car-chrome-extension.git
-   ```
-2. Open Chrome and navigate to `chrome://extensions/`.
-3. Enable **Developer mode** by toggling the switch in the top right corner.
-4. Click **Load unpacked** and select the directory where this extension is located.
-5. The extension is now installed and available for use!
-
 ## How to Use
 
 1. Click on the car icon in your Chrome toolbar.
