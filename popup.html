@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Desktop Car Game</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="container">
+    <!-- Add the hyperlink to the top right -->
+    <a href="https://docs.google.com/document/d/1qC6wVkP9vGdN2WhmqKv-VVD8owwO7c-hPiVyZ1dYNik/edit" target="_blank" id="iconLink"><img src="icon3.ico" alt="Icon"></a>
+</div>
+  <h2>Select Car</h2>
+  <form id="carSelectionForm">
+    <label>
+      <input type="radio" name="car" value="car1.png" checked>
+      <img src="images/car1.png" alt="Car 1" class="car-option">
+    </label>
+    <label>
+      <input type="radio" name="car" value="car2.png">
+      <img src="images/car2.png" alt="Car 2" class="car-option">
+    </label>
+    <label>
+      <input type="radio" name="car" value="car3.png">
+      <img src="images/car3.png" alt="Car 3" class="car-option">
+  </label>
+  </form>
+  <button id="LoadCar">Load Car</button>
+  <button id="UnloadCar">Unload Car</button>
+  <div id="result"></div>
+  <script src="popup.js"></script>
+</body>
+</html>
+
+

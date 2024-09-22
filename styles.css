@@ -1,0 +1,76 @@
+body {
+  font-family: 'Tahoma', sans-serif;
+  width: 250px;
+  height: 230px;
+  background-color: #171a21;
+  color: #c7d5e0;
+  text-align: center;
+  padding: 10px;
+  border-radius: 10px; /* Adjust the radius value as desired */
+  overflow: hidden; /* Prevent content from extending beyond the rounded corners */
+}
+
+button {
+  background-color: #66c0f4;
+  color: #171a21;
+  padding: 10px 20px;
+  font-size: 16px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #1b2838;
+}
+
+#result {
+  margin-top: 20px;
+  font-size: 18px;
+  color: #c7d5e0;
+}
+
+/* Add subtle box shadow to the button for depth */
+button {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.car-option {
+  width: 50px;
+  height: auto;
+  margin: 5px;
+  cursor: pointer;
+}
+
+label {
+  display: inline-block;
+  text-align: center;
+  margin: 5px;
+}
+
+input[type="radio"] {
+  display: none;
+}
+
+label img {
+  border: 2px solid transparent;
+}
+
+input[type="radio"]:checked + img {
+  border: 2px solid #66c0f4;
+}
+
+
+#iconLink {
+  position: absolute;
+  top: 1px; /* Adjust the top position as needed */
+  right: 1px; /* Adjust the right position as needed */
+  display: block;
+  width: 20px; /* Adjust the width as needed */
+  height: auto;
+}
+
+#iconLink img {
+  width: 100%;
+  height: auto;
+}
