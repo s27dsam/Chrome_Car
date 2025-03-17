@@ -24,9 +24,17 @@ loadSelectedCar();
 
 // Load Car button functionality
 document.getElementById('LoadCar').addEventListener('click', () => {
-  const selectedCar = document.querySelector('input[name="car"]:checked').value;
-  chrome.storage.local.set({ selectedCar }, () => {
-    chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
+  chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
+    const url = tabs[0].url;
+
+    // Check if the page is restricted (Chrome Web Store, New Tab, etc.)
+    if (url.startsWith("chrome://") || url.startsWith("https://chrome.google.com/webstore")) {
+      document.getElementById('result').textContent = "Cannot load the car on this page due to browser restrictions.";
+      return;
+    }
+
+    const selectedCar = document.querySelector('input[name="car"]:checked').value;
+    chrome.storage.local.set({ selectedCar }, () => {
       // Inject content script if not already injected
       chrome.scripting.executeScript(
         {
