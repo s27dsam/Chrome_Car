@@ -1,76 +1,170 @@
+
+:root {
+  --bg-color: #111111;
+  --text-color: #f1f1f1;
+  --accent-color: #FF5722;
+  --disabled-color: #444444;
+  --card-bg: #1d1d1d;
+  --border-radius: 8px;
+}
+
 body {
-  font-family: 'Tahoma', sans-serif;
-  width: 250px;
-  height: 230px;
-  background-color: #171a21;
-  color: #c7d5e0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  width: 300px;
+  background-color: var(--bg-color);
+  color: var(--text-color);
   text-align: center;
-  padding: 10px;
-  border-radius: 10px; /* Adjust the radius value as desired */
-  overflow: hidden; /* Prevent content from extending beyond the rounded corners */
+  padding: 15px;
+  overflow: hidden;
 }
 
-button {
-  background-color: #66c0f4;
-  color: #171a21;
-  padding: 10px 20px;
-  font-size: 16px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
 }
 
-button:hover {
-  background-color: #1b2838;
+header h1 {
+  color: var(--accent-color);
+  font-size: 24px;
+  margin: 0;
 }
 
-#result {
-  margin-top: 20px;
+.card {
+  background-color: var(--card-bg);
+  border-radius: var(--border-radius);
+  padding: 15px;
+}
+
+.card h2 {
   font-size: 18px;
-  color: #c7d5e0;
+  margin-top: 0;
+  border-bottom: 1px solid var(--disabled-color);
+  padding-bottom: 10px;
+  margin-bottom: 15px;
 }
 
-/* Add subtle box shadow to the button for depth */
-button {
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+#carSelectionForm {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
 }
 
 .car-option {
-  width: 50px;
+  width: 60px;
   height: auto;
-  margin: 5px;
   cursor: pointer;
-}
-
-label {
-  display: inline-block;
-  text-align: center;
-  margin: 5px;
+  border: 2px solid transparent;
+  border-radius: var(--border-radius);
+  transition: border-color 0.3s;
 }
 
 input[type="radio"] {
   display: none;
 }
 
-label img {
-  border: 2px solid transparent;
-}
-
 input[type="radio"]:checked + img {
-  border: 2px solid #66c0f4;
+  border-color: var(--accent-color);
 }
 
-
-#iconLink {
-  position: absolute;
-  top: 1px; /* Adjust the top position as needed */
-  right: 1px; /* Adjust the right position as needed */
-  display: block;
-  width: 20px; /* Adjust the width as needed */
-  height: auto;
+.setting {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
 }
 
-#iconLink img {
-  width: 100%;
-  height: auto;
+.setting label {
+  font-size: 16px;
+}
+
+input[type="range"] {
+  -webkit-appearance: none;
+  width: 60%;
+  height: 8px;
+  background: var(--disabled-color);
+  border-radius: 5px;
+  outline: none;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 18px;
+  height: 18px;
+  background: var(--accent-color);
+  cursor: pointer;
+  border-radius: 50%;
+}
+
+select {
+  background-color: var(--disabled-color);
+  color: var(--text-color);
+  border: 1px solid var(--accent-color);
+  border-radius: 4px;
+  padding: 5px;
+}
+
+.actions {
+  display: flex;
+  justify-content: space-around;
+  gap: 10px;
+}
+
+button {
+  background-color: var(--accent-color);
+  color: var(--text-color);
+  padding: 10px 20px;
+  font-size: 16px;
+  border: none;
+  border-radius: var(--border-radius);
+  cursor: pointer;
+  flex-grow: 1;
+  transition: background-color 0.3s;
+}
+
+button:hover {
+  background-color: #e64a19; /* Darker accent color */
+}
+
+#UnloadCar {
+    background-color: var(--disabled-color);
+}
+
+#UnloadCar:hover {
+    background-color: #555555;
+}
+
+#result {
+  margin-top: 10px;
+  font-size: 14px;
+  color: var(--text-color);
+}
+
+.cone-selected {
+    border: 2px solid #00FF00; /* Green border for selected cone */
+}
+
+.cone-deselected {
+    border: 2px solid transparent; /* Transparent border for deselected cone */
+}
+
+.smoke {
+    position: fixed;
+    background-color: rgba(255, 255, 255, 0.5);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9998;
+    animation: fadeOut 1s forwards;
+}
+
+@keyframes fadeOut {
+    from {
+        opacity: 1;
+        transform: scale(1);
+    }
+    to {
+        opacity: 0;
+        transform: scale(0.5);
+    }
 }

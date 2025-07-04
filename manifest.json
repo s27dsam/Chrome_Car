@@ -11,16 +11,15 @@
   },
   "content_scripts": [
     {
-      "matches": ["https://www.google.com/"],
+      "matches": ["<all_urls>"],
       "js": ["content.js"],
-      "css": ["styles.css"],
       "run_at": "document_idle"
     }
   ],
   "web_accessible_resources": [
     {
-      "resources": ["images/car1.png", "images/car2.png", "images/car3.png"],
-      "matches": ["https://www.google.com/*"]
+      "resources": ["images/Car1.png", "images/Car2.png", "images/Car3.png", "images/Cone.png"],
+      "matches": ["<all_urls>"]
     }
   ]
 }
