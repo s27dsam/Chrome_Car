@@ -1,15 +1,18 @@
 {
   "manifest_version": 3,
-  "name": "Chrome Cruiser",
-  "version": "1.1",
+  "name": "Chrome Car X",
+  "version": "2.0",
   "description": "Drive a car around your webpages!",
   "permissions": ["activeTab", "scripting", "storage"],
   "host_permissions": ["<all_urls>"],
   "action": {
-    "default_icon": "car_icon.png",
+    "default_icon":{
+      "16": "images/16.png",
+      "48": "images/48.png",
+      "128": "images/128.png"
+    },
     "default_popup": "popup.html"
   },
-  "options_page": "options.html",
   "content_scripts": [
     {
       "matches": ["<all_urls>"],
@@ -19,7 +22,7 @@
   ],
   "web_accessible_resources": [
     {
-      "resources": ["images/Car1.png", "images/Car2.png", "images/Car3.png", "images/Cone.png"],
+      "resources": ["images/Car1.png", "images/Car2.png", "images/Car3.png", "images/qr-code.png"],
       "matches": ["<all_urls>"]
     }
   ]
