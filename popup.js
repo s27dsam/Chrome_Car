@@ -10,47 +10,29 @@ function executeInTab(action, data, callback) {
     });
 }
 
-function saveAndSendSettings() {
-  const selectedCar = document.querySelector('input[name="car"]:checked').value;
-  const speed = document.getElementById('speedRange').value;
-  const tires = document.getElementById('tireSelection').value;
-
-  chrome.storage.local.set({ selectedCar, speed, tires });
-  executeInTab('updateSettings', { speed, tires });
-}
-
-function loadSettings() {
-  chrome.storage.local.get(['selectedCar', 'speed', 'tires'], (data) => {
+function loadCarSelection() {
+  chrome.storage.local.get(['selectedCar'], (data) => {
     if (data.selectedCar) {
       document.querySelector(`input[value="${data.selectedCar}"]`).checked = true;
-    }
-    if (data.speed) {
-      document.getElementById('speedRange').value = data.speed;
-    }
-    if (data.tires) {
-      document.getElementById('tireSelection').value = data.tires;
     }
   });
 }
 
-function updateConeCounter() {
-    executeInTab('getConeCount', {}, response => {
-        const coneCount = response ? response.coneCount : 0;
-        document.getElementById('coneCounter').textContent = `${coneCount}/${maxCones}`;
-        document.getElementById('addCone').disabled = coneCount >= maxCones;
-    });
-}
+document.getElementById('carSelectionForm').addEventListener('change', () => {
+  const selectedCar = document.querySelector('input[name="car"]:checked').value;
+  chrome.storage.local.set({ selectedCar });
+});
 
-document.getElementById('carSelectionForm').addEventListener('change', saveAndSendSettings);
-document.getElementById('speedRange').addEventListener('input', saveAndSendSettings);
-document.getElementById('tireSelection').addEventListener('change', saveAndSendSettings);
+document.getElementById('optionsButton').addEventListener('click', () => {
+  chrome.runtime.openOptionsPage();
+});
 
 document.getElementById('LoadCar').addEventListener('click', () => {
     const selectedCar = document.querySelector('input[name="car"]:checked').value;
-    const speed = document.getElementById('speedRange').value;
-    const tires = document.getElementById('tireSelection').value;
-
-    executeInTab('loadCar', { carImage: 'images/' + selectedCar, speed, tires }, response => {
+    chrome.storage.local.get(['speed', 'tires'], (data) => {
+        const speed = data.speed;
+        const tires = data.tires;
+        executeInTab('loadCar', { carImage: 'images/' + selectedCar, settings: { speed, tires } }, response => {
         if (chrome.runtime.lastError) {
             console.error(chrome.runtime.lastError.message);
             document.getElementById('result').textContent = 'Error: ' + chrome.runtime.lastError.message;
@@ -59,6 +41,7 @@ document.getElementById('LoadCar').addEventListener('click', () => {
         }
         updateConeCounter();
     });
+});
 });
 
 document.getElementById('UnloadCar').addEventListener('click', () => {
@@ -73,11 +56,13 @@ document.getElementById('UnloadCar').addEventListener('click', () => {
     });
 });
 
-document.getElementById('addCone').addEventListener('click', () => {
-    executeInTab('addCone', {}, response => {
-        if (response && response.status === 'coneAdded') {
-            updateConeCounter();
-        }
+loadCarSelection();
+
+// Initial update of settings to content script when popup opens
+document.addEventListener('DOMContentLoaded', () => {
+    const selectedCar = document.querySelector('input[name="car"]:checked').value;
+    chrome.storage.local.get(['speed', 'tires'], (data) => {
+        executeInTab('updateSettings', { settings: { speed: data.speed, tires: data.tires } });
     });
 });
 

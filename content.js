@@ -26,8 +26,8 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
     }
 
     updateCarSettings(request);
-    car.src = chrome.runtime.getURL(request.carImage || 'images/Car2.png');
-    car.style.width = '100px';
+    car.src = chrome.runtime.getURL(request.carImage || 'images/Car3.png');
+    car.style.width = '40px';
     car.style.height = 'auto';
 
     if (!isDriving) {
