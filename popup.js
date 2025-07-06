@@ -1,8 +1,23 @@
 function executeInTab (action, data, callback) {
   chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
     if (tabs[0]) {
+      console.log(`[popup.js] Attempting to execute script for action: ${action}`);
       chrome.scripting.executeScript({ target: { tabId: tabs[0].id }, files: ['content.js'] }, () => {
-        chrome.tabs.sendMessage(tabs[0].id, { action, ...data }, callback)
+        if (chrome.runtime.lastError) {
+          console.error(`[popup.js] Error executing script: ${chrome.runtime.lastError.message}`);
+          if (callback) callback({ status: 'Error executing script.' });
+          return;
+        }
+        console.log(`[popup.js] Script executed. Waiting before sending message for action: ${action}`);
+        // Introduce a small delay to allow content script's listener to fully register
+        setTimeout(() => {
+          chrome.tabs.sendMessage(tabs[0].id, { action, ...data }, response => {
+            if (chrome.runtime.lastError) {
+              console.error(`[popup.js] Error sending message for action ${action}: ${chrome.runtime.lastError.message}`);
+            }
+            if (callback) callback(response);
+          });
+        }, 50); // 50ms delay
       })
     }
   })
@@ -104,7 +119,11 @@ document.addEventListener('DOMContentLoaded', () => {
   updateUnloadButtonState()
   const selectedCar = document.querySelector('input[name="car"]:checked').value
   chrome.storage.local.get(['speed', 'tires', 'trailColor', 'trailLength'], (data) => {
-        executeInTab('updateSettings', { settings: { speed: data.speed, tires: data.tires, trailColor: data.trailColor, trailLength: data.trailLength } });
+        const speed = data.speed;
+        const tires = data.tires;
+        const trailColor = data.trailColor;
+        const trailLength = data.trailLength;
+        executeInTab('updateSettings', { settings: { speed, tires, trailColor, trailLength } });
     });
 })
 
@@ -117,7 +136,7 @@ function saveAndSendSettings() {
   const trailLength = document.getElementById('trailLength').value;
 
   chrome.storage.local.set({ speed, tires, trailColor, trailLength });
-  executeInTab('updateSettings', { speed, tires, trailColor, trailLength });
+  executeInTab('updateSettings', { settings: { speed, tires, trailColor, trailLength } });
 }
 
 function loadSettings() {

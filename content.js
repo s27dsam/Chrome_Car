@@ -21,10 +21,11 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
       x = window.innerWidth / 2
       y = window.innerHeight / 2
 
-      if (!window.isCarListenerAdded) {
-        window.addEventListener('keydown', keydownHandler, { capture: true, passive: false })
-        window.addEventListener('keyup', keyupHandler, { capture: true, passive: false })
-        window.isCarListenerAdded = true
+      // Add event listeners only if they haven't been added yet
+      if (!car.dataset.listenersAdded) {
+        window.addEventListener('keydown', keydownHandler, { capture: true, passive: false });
+        window.addEventListener('keyup', keyupHandler, { capture: true, passive: false });
+        car.dataset.listenersAdded = 'true';
       }
     }
 
@@ -54,10 +55,11 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
         cancelAnimationFrame(animationFrameId);
         animationFrameId = null;
       }
-      if (window.isCarListenerAdded) {
+      // Remove event listeners if they were added
+      if (car.dataset.listenersAdded) {
         window.removeEventListener('keydown', keydownHandler, { capture: true, passive: false });
         window.removeEventListener('keyup', keyupHandler, { capture: true, passive: false });
-        window.isCarListenerAdded = false;
+        delete car.dataset.listenersAdded;
       }
     }
     sendResponse({ status: 'Car unloaded.' })
