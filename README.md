@@ -1,6 +1,6 @@
 # Car Chrome Extension
 
-# Chrome Store link: https://chromewebstore.google.com/detail/ipplegcbbinfggmhnbnkblndpkilbnkn?utm_source=item-share-cb
+# Chrome Store link: Chome Car X
 
 **Drive a customizable car around any webpage for a fun, interactive browsing experience!**
 
